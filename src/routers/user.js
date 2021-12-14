@@ -1,28 +1,33 @@
 const express = require('express')
 
 const User = require('../model/user')
+const auth = require('../middleware/auth')
 
 const router = new express.Router()
 
 router.post('/users', async (req, res) => {
     const user = new User(req.body)
-    console.log(user)
     try {
         await user.save()
-        res.status(201).send(user)
+        const token = await user.generateAuthToken()
+        res.status(201).send({ user, token })
     } catch (e) {
         res.status(400).send(e)
     }
 })
 
-router.get('/users', async (req, res) => {
-
+router.post('/login', async (req, res) => {
     try {
-        const users = await User.find({})
-        res.status(200).send(users)
+        const user = await User.findByCredentials(req.body.email, req.body.password)
+        const token = await user.generateAuthToken()
+        return res.status(200).send({ user, token })
     } catch (e) {
-        res.status(500).send(e)
+        res.status(400).send(e)
     }
+})
+
+router.get('/users/me', auth, async (req, res) => {
+    res.send(req.user)
 })
 
 router.get('/users/:id', async (req, res) => {
