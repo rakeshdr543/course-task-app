@@ -6,6 +6,7 @@ const router = new express.Router()
 
 router.post('/users', async (req, res) => {
     const user = new User(req.body)
+    console.log(user)
     try {
         await user.save()
         res.status(201).send(user)
@@ -44,7 +45,10 @@ router.patch('/users/:id', async (req, res) => {
         res.status(400).send({ error: "Invalid field update" })
     }
     try {
-        const user = User.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
+        const user = await User.findById(id)
+        updates.forEach((update) => user[update] = req.body[update])
+        await user.save()
+
         if (!user) {
             return res.status(404).send()
         }
