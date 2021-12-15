@@ -1,5 +1,4 @@
 const express = require('express')
-
 const multer = require('multer')
 const sharp = require('sharp')
 
@@ -9,7 +8,8 @@ const { sendWelcomeEmail, sendCancellationEmail } = require('../emails/account')
 
 const router = new express.Router()
 const upload = multer({
-    // dest: 'avatar/',
+    // Storing in local destination folder
+    // dest: 'avatar/'
     limits: {
         fileSize: 1000000
     },
