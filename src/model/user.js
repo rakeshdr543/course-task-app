@@ -46,8 +46,13 @@ const userSchema = mongoose.Schema({
             type: String,
             required: true
         }
-    }]
-})
+    }],
+    // tasks: [
+    //     {
+    //         type: mongoose.Schema.Types.ObjectId, Ref: 'Task'
+    //     }
+    // ]
+}, { timestamps: true })
 
 userSchema.virtual('tasks', {
     ref: 'Task',
