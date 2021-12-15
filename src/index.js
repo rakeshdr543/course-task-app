@@ -4,7 +4,6 @@ require('dotenv').config()
 const connectDB = require('./db/mongoose');
 const userRouter = require('./routers/user')
 const taskRouter = require('./routers/task');
-const User = require('./model/user');
 
 const port = process.env.PORT || 3000
 const app = express()
