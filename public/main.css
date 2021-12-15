@@ -213,7 +213,7 @@ textarea {
 }
 
 .task-form,
-.single-task-form {
+.single-task-form,.text-main {
   width: 90vw;
   max-width: var(--fixed-width);
   margin: 0 auto;
